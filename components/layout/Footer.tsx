@@ -1,62 +1,32 @@
+
 'use client';
 
 import { Phone, Mail, Facebook, Instagram, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import AnimatedSection from '@/components/ui/AnimatedSection';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
   const { t } = useTranslation();
+  const pathname = usePathname();
+  const currentLocale = pathname.split('/')[1] || 'fr';
 
   return (
     <footer className="bg-brand-dark text-white pt-20 pb-10 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <AnimatedSection width="100%">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            {/* Brand */}
-            <div>
-              <span className="text-3xl font-black font-montserrat uppercase tracking-tighter text-white mb-6 block leading-none">
-                AKR<span className="text-accent-energy">Group</span>
-              </span>
-              <div className="w-12 h-1 bg-gradient-to-r from-accent-energy to-accent-solar mb-6 rounded-full" />
-              <p className="text-white/60 font-medium leading-relaxed mb-6">
-                {t('footer.description')}
-              </p>
-              <p className="font-bold text-white flex items-center gap-2">
-                <span className="text-2xl">🇧🇪</span> {t('footer.active')}
-              </p>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <h4 className="font-montserrat font-black uppercase tracking-widest text-sm text-white/40 mb-8">
-                {t('footer.contact')}
-              </h4>
-              <div className="space-y-6">
-                <a href="tel:+32484430083" className="flex items-center gap-4 text-white/80 hover:text-accent-energy transition-colors group">
-                  <div className="w-10 h-10 flex-shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-accent-energy group-hover:text-white transition-all">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <span className="font-bold">+32 484 43 00 83</span>
-                </a>
-                <a href="mailto:abdel.akachar12@gmail.com" className="flex items-center gap-4 text-white/80 hover:text-accent-energy transition-colors group">
-                  <div className="w-10 h-10 flex-shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-accent-energy group-hover:text-white transition-all">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <span className="font-bold break-all">abdel.akachar12@gmail.com</span>
-                </a>
-              </div>
-            </div>
-
+            {/* ... */}
             {/* ServicesLinks */}
             <div>
               <h4 className="font-montserrat font-black uppercase tracking-widest text-sm text-white/40 mb-8">
                 {t('footer.services')}
               </h4>
               <ul className="space-y-4 font-medium text-white/70">
-                <li><a href="#energie" className="hover:text-accent-energy transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent-energy" /> {t('services.energy.title')}</a></li>
-                <li><a href="#solaire" className="hover:text-accent-solar transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent-solar" /> {t('services.solar.title')}</a></li>
-                <li><a href="#telecom" className="hover:text-accent-telecom transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent-telecom" /> {t('services.telecom.title')}</a></li>
+                <li><a href={`/${currentLocale}#energie`} className="hover:text-accent-energy transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent-energy" /> {t('services.energy.title')}</a></li>
+                <li><a href={`/${currentLocale}#solaire`} className="hover:text-accent-solar transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent-solar" /> {t('services.solar.title')}</a></li>
+                <li><a href={`/${currentLocale}#telecom`} className="hover:text-accent-telecom transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent-telecom" /> {t('services.telecom.title')}</a></li>
               </ul>
             </div>
 

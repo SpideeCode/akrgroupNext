@@ -15,18 +15,23 @@ export default function Header({ onDevisClick }: HeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
 
+  // Get current locale from pathname (first segment)
+  const currentLocale = pathname.split('/')[1] || 'fr';
+
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    // Redirect to new locale path
+    const newPath = pathname.replace(`/${currentLocale}`, `/${lng}`);
+    router.push(newPath);
   };
 
   const handleNavigation = (item: { label: string; id?: string; path?: string }) => {
     setIsMobileMenuOpen(false); // Close mobile menu if open
     if (item.path) {
-      router.push(item.path);
-      // window.scrollTo(0, 0); // Next.js handles this automatically
+      router.push(`/${currentLocale}${item.path}`);
     } else if (item.id) {
-      if (pathname !== '/') {
-        router.push('/#' + item.id);
+      if (pathname !== `/${currentLocale}`) {
+        router.push(`/${currentLocale}/#` + item.id);
       } else {
         const element = document.getElementById(item.id);
         if (element) {
@@ -38,8 +43,8 @@ export default function Header({ onDevisClick }: HeaderProps) {
 
   const handleLogoClick = () => {
     setIsMobileMenuOpen(false);
-    if (pathname !== '/') {
-      router.push('/');
+    if (pathname !== `/${currentLocale}`) {
+      router.push(`/${currentLocale}`);
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -54,42 +59,42 @@ export default function Header({ onDevisClick }: HeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-brand-dark/10 bg-white/90 backdrop-blur-md shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 grid grid-cols-2 lg:grid-cols-[1fr_auto_1fr] items-center gap-4">
         {/* Logo */}
-        <div className="flex flex-col items-start cursor-pointer" onClick={handleLogoClick}>
+        <div className="flex flex-col items-start cursor-pointer justify-self-start" onClick={handleLogoClick}>
           <span className="text-3xl font-black font-montserrat uppercase tracking-tighter text-brand-dark leading-none">
             AKR<span className="text-accent-energy">Group</span>
           </span>
           <div className="w-full h-1 bg-gradient-to-r from-accent-energy via-accent-solar to-accent-telecom mt-1 rounded-full opactiy-80" />
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        {/* Desktop Navigation - Centered */}
+        <nav className="hidden lg:flex items-center gap-8 justify-self-center">
           {navItems.map((item) => (
             <button
               key={item.label}
               onClick={() => handleNavigation(item)}
-              className="font-montserrat font-bold text-sm uppercase tracking-wide text-brand-dark/70 hover:text-brand-dark transition-colors"
+              className="font-montserrat font-bold text-sm uppercase tracking-wide text-brand-dark/70 hover:text-brand-dark transition-colors whitespace-nowrap"
             >
               {item.label}
             </button>
           ))}
         </nav>
 
-        {/* Right Action: Language + CTA + Mobile Toggle */}
-        <div className="flex items-center gap-6">
+        {/* Right Action: Language + CTA + Mobile Toggle - Right Aligned */}
+        <div className="flex items-center gap-6 justify-self-end">
           {/* Language Selector (Desktop) */}
           <div className="hidden sm:flex items-center gap-3 font-montserrat font-bold text-sm">
             <button
               onClick={() => changeLanguage('fr')}
-              className={`${i18n.language === 'fr' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
+              className={`${currentLocale === 'fr' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
             >
               FR
             </button>
             <span className="text-brand-dark/20">|</span>
             <button
               onClick={() => changeLanguage('nl')}
-              className={`${i18n.language === 'nl' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
+              className={`${currentLocale === 'nl' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
             >
               NL
             </button>
@@ -98,7 +103,7 @@ export default function Header({ onDevisClick }: HeaderProps) {
           {/* CTA Button (Desktop) */}
           <button
             onClick={onDevisClick}
-            className="hidden md:block px-6 py-2 bg-brand-dark text-white font-montserrat font-bold uppercase text-xs tracking-widest hover:bg-brand-primary transition-all shadow-lg shadow-brand-dark/20"
+            className="hidden md:block px-6 py-2 bg-brand-dark text-white font-montserrat font-bold uppercase text-xs tracking-widest hover:bg-brand-primary transition-all shadow-lg shadow-brand-dark/20 whitespace-nowrap"
           >
             {t('nav.quote')}
           </button>
@@ -131,14 +136,14 @@ export default function Header({ onDevisClick }: HeaderProps) {
             <div className="flex items-center gap-3 font-montserrat font-bold text-sm">
               <button
                 onClick={() => changeLanguage('fr')}
-                className={`${i18n.language === 'fr' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
+                className={`${currentLocale === 'fr' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
               >
                 FR
               </button>
               <span className="text-brand-dark/20">|</span>
               <button
                 onClick={() => changeLanguage('nl')}
-                className={`${i18n.language === 'nl' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
+                className={`${currentLocale === 'nl' ? 'text-brand-dark' : 'text-brand-dark/40'} transition-colors`}
               >
                 NL
               </button>

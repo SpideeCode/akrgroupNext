@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Montserrat } from 'next/font/google';
-import './globals.css';
-import { Providers } from './providers';
+import '../globals.css';
+import { Providers } from '../providers';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${montserrat.variable}`}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers locale="fr">{children}</Providers>
       </body>
     </html>
   );

@@ -5,13 +5,15 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { supabase } from '@/lib/supabase';
 import { CheckCircle, Upload } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation'; // Added usePathname here
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 
 export default function JobPageContent() {
     const { t } = useTranslation();
     const router = useRouter();
+    const pathname = usePathname(); // Added hook usage
+    const currentLocale = pathname.split('/')[1] || 'fr'; // Added locale extraction
     const [formData, setFormData] = useState({
         nom: '',
         prenom: '',
@@ -62,7 +64,7 @@ export default function JobPageContent() {
     };
 
     // Navigation logic handled by router in Header
-    const handleDevisClick = () => router.push('/#services');
+    const handleDevisClick = () => router.push(`/${currentLocale}/#services`);
 
     if (success) {
         return (
