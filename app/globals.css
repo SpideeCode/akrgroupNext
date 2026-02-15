@@ -1,26 +1,65 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-brand-cream: #F8FAFC;
+  --color-brand-dark: #003366;
+  --color-brand-primary: #00509E;
+  --color-brand-muted: #64748B;
+  
+  --color-accent-energy: #F59E0B;
+  --color-accent-solar: #10B981;
+  --color-accent-telecom: #8B5CF6;
+
+  --font-montserrat: var(--font-montserrat);
+  --font-inter: var(--font-inter);
+
+  --border-width-3: 3px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    @apply font-inter bg-brand-cream text-brand-dark antialiased;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-montserrat font-bold;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="number"],
+  select {
+    @apply w-full bg-transparent border-b-2 border-brand-dark py-3 focus:outline-none focus:border-accent-energy transition-colors font-medium text-lg rounded-none;
+  }
+
+  label {
+    @apply block text-[10px] uppercase tracking-[0.2em] font-black text-brand-muted mb-2;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-option {
+    @apply p-6 border-2 font-montserrat font-bold uppercase text-xs tracking-widest transition-all;
+  }
+
+  .btn-option-active {
+    @apply border-brand-dark bg-brand-dark text-white;
+    box-shadow: 4px 4px 0px 0px rgba(26, 26, 26, 0.1);
+  }
+
+  .btn-option-inactive {
+    @apply border-brand-dark/10 hover:border-brand-dark/30 text-brand-dark/60;
+  }
+
+  .safe-area-view {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .safe-area-padding-bottom {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
 }
